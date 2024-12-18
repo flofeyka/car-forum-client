@@ -1,11 +1,11 @@
-import {Button, Input} from "@nextui-org/react";
+import {Button, Input, Spinner} from "@nextui-org/react";
 import {useForm} from "react-hook-form";
 import {useDispatch, useSelector} from "react-redux";
 import {signUp} from "../../../redux/slices/authSlice";
 import {useNavigate} from "react-router-dom";
 
 export default function RegisterForm() {
-    const {error} = useSelector(state => state.auth);
+    const {error, loading} = useSelector(state => state.auth);
     const {register, handleSubmit} = useForm();
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -21,6 +21,6 @@ export default function RegisterForm() {
         <Input {...register('fullName', {required: true})} placeholder={"Ваше имя"} size={"lg"}/>
         <Input {...register('email', {required: true})} placeholder={"Электронная почта"} type={"email"} size={"lg"}/>
         <Input {...register('password', {required: true})} placeholder={"Пароль"} type={"password"} size={"lg"}/>
-        <Button type={'submit'} size={"lg"}>Зарегистрироваться</Button>
+        <Button disabled={loading} type={'submit'} size={"lg"}>{loading ? <Spinner/> :"Зарегистрироваться"}</Button>
     </form>
 }
